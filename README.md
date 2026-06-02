@@ -1,4 +1,4 @@
-# wazuh-detection-lab
+# wazuh-detection-hardening-lab
 A practical, hands on real-world attack scenarios for learning how to detect post-exploitation activity using **Wazuh**. This repository focuses on real-world attack scenarios, detection engineering, and system hardening.
 
 ## Overview
