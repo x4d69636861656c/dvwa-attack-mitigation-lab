@@ -21,32 +21,31 @@ Exploit command injection in DVWA at low security level to execute system comman
 - Commands are executed with the privileges of the `www-data` user.
 ------------------------------------------------------------
 
-## Monitor (Wazuh)
-### Configuration
-**File Integrity Monitoring (FIM):**
+## Monitor
+### Tools Used
+- Apache Access Logs: Best for detecting command injection attempts.
+- ModSecurity (Web Application Firewall): Can detect and block suspicious requests in real-time.
 
-Add this inside the `<syscheck>`section of of the wazuh agent`/var/ossec/etc/ossec.conf`:
-
-```xml
-<directories check_all="yes" realtime="yes">/var/www/html/dvwa</directories>
-```
-
-Add this block before the closing </ossec_config> tag:
-
-```xml
-<localfile>
-    <log_format>command</log_format>
-    <command>ps aux</command>
-    <frequency>30</frequency>
-</localfile>
-```
-### Restart the Wazuh Agent
+### Install ModSecurity:
 ```bash
-sudo systemctl restart wazuh-agent
+sudo apt update
+sudo apt install -y libapache2-mod-security2
+sudo a2enmod security2 # enable modsecurity
+sudo systemctl restart apache2
 ```
-### What to look for in Wazuh Dashboard
-- New or modified files appear in the Wazuh dashboard under Threat Hunting -> Events
-- Search for syscheck or the file path /var/www/html/dvwa
+
+### Enable Audit Logging:
+#### Edit /etc/modsecurity/modsecurity.conf
+```bash
+SecAuditEngine On
+SecAuditing /var/log/apache2/modsec_audit.log
+```
+
+### Commands to detect attacks
+**Monitor logs in real time:**
+```bash
+sudo tail -f /var/log/apache2/modsec_audit.log
+```
 -----------------------------------------------------------
 
 ## Mitigate
@@ -59,3 +58,20 @@ How DVWA "Mitigates" at low":
 How to bypass:
 - Use the semicolon (;) to chain commands
 - Example 127.0.0.1; whoami
+
+### PHP Hardening
+Disable dangerous functions:
+```bash
+sudo nano /etc/php/*/apachje2/php.ini
+```
+Add:
+```ini
+disable_functions = system,exec,shell_exec,passthru,proc_open, popen
+```
+Restart Apache
+```bash
+sudo systemctl restart apache2
+```
+
+# Summary
+At low difficulty, command injection is trivial to exploit. ModSecurity combined with PHP hardening provides strong protection in real environments.
