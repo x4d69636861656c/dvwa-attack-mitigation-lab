@@ -7,8 +7,17 @@ A hands-on lab for learning web application attacks using DVWA, with a focus on 
 - Learn real-world monitoring and mitigation techniques (ModSecurity, WAFs, etc.)
 - Build practical offensive and defensive skills
 
-## Structure
-Each attack has its own document with the following sections:
+## Repository Structure
+dvwa-attack-mitigation-lab/                                                                                           
+├── README.md                                                                                             
+└── docs/                                                                                          
+    └── command-injection/                     
+        ├── command-injection-low.md                                                                                  
+        ├── command-injection-medium.md                                                                               
+        ├── command-injection-high.md                                                                                 
+        └── command-injection-impossible.md
+
+Each attack has its own folder, with separate files for each difficulty level:
 
 - Attack: how to exploit the vulnerability
 - Security controls: What DVWA adds at each difficulty level and how to bypass it

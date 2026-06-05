@@ -1,5 +1,5 @@
-# Command Injection - Low
-## Attack
+# COMMAND INJECTION - LOW
+## ATTACK
 ### Objective
 Exploit command injection in DVWA at low security level to execute system commands on the server.
 
@@ -21,7 +21,7 @@ Exploit command injection in DVWA at low security level to execute system comman
 - Commands are executed with the privileges of the `www-data` user.
 ------------------------------------------------------------
 
-## Monitor
+## MONITOR
 ### Tools Used
 - Apache Access Logs: Best for detecting command injection attempts.
 - ModSecurity (Web Application Firewall): Can detect and block suspicious requests in real-time.
@@ -48,7 +48,7 @@ sudo tail -f /var/log/apache2/modsec_audit.log
 ```
 -----------------------------------------------------------
 
-## Mitigate
+## MITIGATE
 At low difficulty, DVWA applies no input sanitation or filtering.
 
 How DVWA "Mitigates" at low":
